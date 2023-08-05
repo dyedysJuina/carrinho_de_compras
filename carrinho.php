@@ -39,9 +39,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 ?>
 
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Carrinho de Compras</title>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="style.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
 </head>
 <body>
     <h1>Carrinho de Compras</h1>
@@ -54,14 +57,57 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $subtotal = $item['preco'] * $item['quantidade'];
                 $totalCarrinho += $subtotal;
             ?>
-                <li>
+
+
+      <div class="limitador">
+          
+      <div class="cards">
+
+        <div class="imagem">
+            imagem
+        </div>
+
+        <div class="dados">
+            <div class="titulo">
+            <?php echo $item['nome']; ?>
+            </div>
+            <div class="dados_preco">
+            <div class="valor_unitario">
+             <p>Uni</p>        
+            <?php echo"R$ ".number_format((float)$item['preco'], 2, ',', '.'); ?>
+            </div>
+            <div class="quantidade">
+                <p>Qtd</p>
+            <?php echo $item['quantidade']; ?>
+            </div>
+            <div class="valor_total">
+                <p>Total</p>
+            <?php echo"R$".number_format((float)$subtotal, 2, ',', '.'); ?>
+            </div>
+        </div>
+        </div>
+        </div>
+
+
+      </div>
+
+
+            
+
+
+
+
+
+           <!-- <li>
                     <?php echo $item['nome']; ?> - R$ <?php echo number_format((float)$item['preco'], 2, ',', '.'); ?>
-                    - Quantidade: <?php echo $item['quantidade']; ?> - Subtotal: R$ <?php echo number_format((float)$subtotal, 2, ',', '.'); ?>
-                </li>
+                    - QTD: <?php echo $item['quantidade']; ?> - Subtotal: R$ <?php echo number_format((float)$subtotal, 2, ',', '.'); ?>
+                </li> -->
+            </div>
+                
             <?php endforeach; ?>
         </ul>
 
-        <p>Total do Carrinho: R$ <?php echo number_format((float)$totalCarrinho, 2, ',', '.'); ?></p>
+       
 
         <?php
         // Construir os parâmetros da mensagem
@@ -69,17 +115,31 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         foreach ($_SESSION['carrinho'] as $item) {
             $subtotal = $item['preco'] * $item['quantidade'];
             $mensagem .= $item['nome'] . " - Quantidade: " . $item['quantidade'] . " - Subtotal: R$" . number_format((float)$subtotal, 2, ',', '.') . "%0A";
-        }
+        }?>
+        
+        
+        
+        <?php
         $mensagem .= "Total do Carrinho: R$ " . number_format((float)$totalCarrinho, 2, ',', '.') . "%0A";
 
         // Número de telefone para onde enviar a mensagem (substitua pelo número desejado)
         $numeroTelefone = "5544998331612";
 
         // Montar o link do WhatsApp Web
-        $linkWhatsapp = "https://web.whatsapp.com/send?phone=" . $numeroTelefone . "&text=" . $mensagem;
+        $linkWhatsapp = "https://api.whatsapp.com/send?phone=" . $numeroTelefone . "&text=" . $mensagem;
         ?>
+        
+        <div class="botao_comprar">
+            <div class="total">
+            <h4>Total de</h4>
+              <p><?php echo"R$".number_format((float)$totalCarrinho, 2, ',', '.'); ?></p> 
+            </div>
+            <div class="enviar_whatsapp">
+              <a href="<?php echo $linkWhatsapp; ?>" tarGET="_blank">Enviar Pedido</a>
+            </div>
+        </div>
 
-        <a href="<?php echo $linkWhatsapp; ?>" tarGET="_blank">Enviar carrinho por WhatsApp</a>
+        
 
         <form method="GET">
             <button type="submit" name="limpar_carrinho">Limpar Carrinho</button>
