@@ -3,6 +3,7 @@
 <head>
     <title>Carrinho de Compras</title>
     <!-- Importação das bibliotecas do jQuery e Toastr (para exibir notificações) -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
@@ -13,7 +14,6 @@
         <?php
         include_once("conexao.php");
 
-        // Selecionar todos os produtos do banco de dados
         $sql = "SELECT * FROM produtos";
         $query = mysqli_query($conn, $sql);
 
